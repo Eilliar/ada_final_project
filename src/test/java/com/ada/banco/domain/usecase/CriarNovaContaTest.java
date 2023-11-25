@@ -9,12 +9,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class) // Iniciar os mocks sem necessidade de iniciar no beforeEach
+
 public class CriarNovaContaTest {
     // mvn repository - Mockito core
     @Mock
