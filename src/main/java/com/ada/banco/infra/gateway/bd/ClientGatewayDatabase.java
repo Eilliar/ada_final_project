@@ -18,7 +18,7 @@ public class ClientGatewayDatabase implements ClientGateway {
     }
 
     @Override
-    public Client saveNewUser(Client client){
+    public Client saveNewClient(Client client){
         return clientRepository.save(client);
     }
 }

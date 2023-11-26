@@ -4,5 +4,5 @@ import com.ada.banco.domain.model.Client;
 
 public interface ClientGateway {
     Client searchByCpf(String cpf);
-    Client saveNewUser(Client client);
+    Client saveNewClient(Client client);
 }

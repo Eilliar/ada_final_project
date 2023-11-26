@@ -18,10 +18,10 @@ public class CreateNewClient {
 
     public Client execute(Client client) throws Exception {
         if(clientGateway.searchByCpf(client.getCpf()) != null){
-            throw new Exception("User already exists");
+            throw new Exception("User already exists.");
         }
 
-        Client newClient = clientGateway.saveNewUser(client);
+        Client newClient = clientGateway.saveNewClient(client);
         emailGateway.send(newClient.getCpf());
         return newClient;
     }
