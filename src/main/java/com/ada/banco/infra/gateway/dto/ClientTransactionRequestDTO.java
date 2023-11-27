@@ -13,6 +13,13 @@ public class ClientTransactionRequestDTO {
     private String destinationAccountCpf;
     private BigDecimal clientTransactionValue;
 
+    public ClientTransactionRequestDTO(ClientTransaction.ClientTransactionType clientTransactionType, String sourceAccountCpf, String destinationAccountCpf, BigDecimal clientTransactionValue) {
+        this.clientTransactionType = clientTransactionType;
+        this.sourceAccountCpf = sourceAccountCpf;
+        this.destinationAccountCpf = destinationAccountCpf;
+        this.clientTransactionValue = clientTransactionValue;
+    }
+
     public ClientTransaction.ClientTransactionType getClientTransactionType() {
         return clientTransactionType;
     }
