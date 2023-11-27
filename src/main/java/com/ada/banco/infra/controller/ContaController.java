@@ -1,26 +1,26 @@
 package com.ada.banco.infra.controller;
 
 import com.ada.banco.domain.model.Conta;
-import com.ada.banco.domain.usecase.CriarNovaConta;
+import com.ada.banco.domain.usecase.CreateNewAccount;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/contas")
+@RequestMapping("/api/v1/contas")
 public class ContaController {
 
-    private CriarNovaConta criarNovaConta;
+    private CreateNewAccount createNewAccount;
 
-    public ContaController(CriarNovaConta criarNovaConta) {
-        this.criarNovaConta = criarNovaConta;
+    public ContaController(CreateNewAccount createNewAccount) {
+        this.createNewAccount = createNewAccount;
     }
 
     @PostMapping
     public ResponseEntity criarConta(@RequestBody Conta conta) throws Exception {
         Conta novaConta;
         try {
-            novaConta = criarNovaConta.execute(conta);
+            novaConta = createNewAccount.execute(conta);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -43,7 +43,7 @@ public class ContaControllerTest {
     @Test
     void criarConta_ComSucesso_DeveRetornarStatus201() throws Exception {
         // Arrange
-        String requestBody = objectMapper.writeValueAsString(new Conta(1L, 2L, 3L, BigDecimal.ZERO, "Pedro", "123456789"));
+        String requestBody = objectMapper.writeValueAsString(new Conta(1L, 2L, Conta.AccountType.CORRENTE, BigDecimal.ZERO, "Pedro", "123456789"));
 
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders
@@ -59,7 +59,7 @@ public class ContaControllerTest {
     @Test
     void criarConta_JaExistente_DeveRetornarStatusBadRequest() throws Exception {
         // Arrange
-        Conta conta = new Conta(1L, 2L, 3L, BigDecimal.ZERO, "Pedro", "123456789");
+        Conta conta = new Conta(1L, 2L, Conta.AccountType.CORRENTE, BigDecimal.ZERO, "Pedro", "123456789");
         String requestBody = objectMapper.writeValueAsString(conta);
 
         contaRepository.save(conta);
@@ -75,7 +75,7 @@ public class ContaControllerTest {
 
     @Test
     void criarConta_ComSucesso_DeveSalvarAConta() throws Exception {
-        Conta conta = new Conta(1L, 2L, 3L, BigDecimal.ZERO, "Pedro", "123456789");
+        Conta conta = new Conta(1L, 2L, Conta.AccountType.CORRENTE, BigDecimal.ZERO, "Pedro", "123456789");
 
         // when
         contaController.criarConta(conta);

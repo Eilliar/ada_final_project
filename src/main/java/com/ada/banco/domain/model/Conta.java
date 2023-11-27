@@ -1,40 +1,46 @@
 package com.ada.banco.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
 @Entity
 public class Conta {
+
+    public enum AccountType {
+        CORRENTE,
+        POUPANCA
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private Long agencia;
     private Long digito;
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
     private BigDecimal saldo;
-
-    // Usuario / Titular
     private String titular;
+    @Column(unique = true)
     private String cpf;
 
     public Conta() {
     }
 
-    public Conta(Long id, Long agencia, Long digito, BigDecimal saldo, String titular, String cpf) {
+    public Conta(Long id, Long agencia, Long digito, AccountType accountType, BigDecimal saldo, String titular, String cpf) {
         this.id = id;
         this.agencia = agencia;
         this.digito = digito;
+        this.accountType = accountType;
         this.saldo = saldo;
         this.titular = titular;
         this.cpf = cpf;
     }
 
-    public Conta(Long agencia, Long digito, BigDecimal saldo, String titular, String cpf) {
+    public Conta(Long agencia, Long digito, AccountType accountType, BigDecimal saldo, String titular, String cpf) {
         this.agencia = agencia;
         this.digito = digito;
+        this.accountType = accountType;
         this.saldo = saldo;
         this.titular = titular;
         this.cpf = cpf;
@@ -86,5 +92,13 @@ public class Conta {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 }

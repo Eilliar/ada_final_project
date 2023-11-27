@@ -3,23 +3,18 @@ package com.ada.banco.domain.usecase;
 import com.ada.banco.domain.gateway.ContaGateway;
 import com.ada.banco.domain.gateway.EmailGateway;
 import com.ada.banco.domain.model.Conta;
-import com.ada.banco.dummy.ContaGatewayDummyImpl;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 
-// Vamos utilizar o Mockito Core
-
 @ExtendWith(MockitoExtension.class)
-public class CriarNovaContaMockRevisaoTest {
+public class CreateNewAccountMockTest {
     @Mock
     ContaGateway contaGateway;
 
@@ -27,20 +22,20 @@ public class CriarNovaContaMockRevisaoTest {
     EmailGateway emailGateway;
 
     @InjectMocks
-    CriarNovaConta criarNovaConta;
+    CreateNewAccount createNewAccount;
 
     @Test
     public void deveLancarExceptionCasoAContaJaExista() {
         // Given
         Conta conta =
-                new Conta(1L, 2L, 3L, BigDecimal.ZERO, "Pedro", "123456789");
+                new Conta(1L, 1L, 2L, Conta.AccountType.CORRENTE, BigDecimal.ZERO, "Pedro", "123456789");
 
         Mockito.when(contaGateway.buscarPorCpf(conta.getCpf())).thenReturn(conta); // Stub no mockito
 
         // When Then
         Throwable throwable = Assertions.assertThrows(
                 Exception.class,
-                () -> criarNovaConta.execute(conta)
+                () -> createNewAccount.execute(conta)
         );
 
         Assertions.assertEquals("Usuario ja possui uma conta", throwable.getMessage());
@@ -54,14 +49,14 @@ public class CriarNovaContaMockRevisaoTest {
     public void deveCriarNovaConta() throws Exception {
         // Given
         Conta conta =
-                new Conta(1L, 2L, 3L, BigDecimal.ZERO, "Pedro", "222222222");
+                new Conta(1L, 1L, 2L, Conta.AccountType.CORRENTE, BigDecimal.ZERO, "Pedro", "222222222");
 
         Mockito.when(contaGateway.buscarPorCpf(conta.getCpf())).thenReturn(null);
         Mockito.when(contaGateway.salvar(conta)).thenReturn(conta);
         Mockito.doNothing().when(emailGateway).send(conta.getCpf());
 
         // When
-        Conta novaConta = criarNovaConta.execute(conta);
+        Conta novaConta = createNewAccount.execute(conta);
 
         // Then
         Assertions.assertAll(

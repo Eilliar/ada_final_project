@@ -6,11 +6,11 @@ import com.ada.banco.domain.model.Conta;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CriarNovaConta {
+public class CreateNewAccount {
     private ContaGateway contaGateway;
     private EmailGateway emailGateway;
 
-    public CriarNovaConta(ContaGateway contaGateway, EmailGateway emailGateway) {
+    public CreateNewAccount(ContaGateway contaGateway, EmailGateway emailGateway) {
         this.contaGateway = contaGateway;
         this.emailGateway = emailGateway;
     }
@@ -19,6 +19,7 @@ public class CriarNovaConta {
         if(contaGateway.buscarPorCpf(conta.getCpf()) != null) {
              throw new Exception("Usuario ja possui uma conta");
         }
+
 
         Conta novaConta = contaGateway.salvar(conta);
         emailGateway.send(conta.getCpf());
